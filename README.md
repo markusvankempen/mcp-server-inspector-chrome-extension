@@ -5,7 +5,7 @@
 **A Manifest V3 Chrome extension and developer workbench for exploring, validating, and auditing Model Context Protocol (MCP) servers.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2.0-brightgreen.svg)](#overview)
+[![Version](https://img.shields.io/badge/version-1.2.1-brightgreen.svg)](#overview)
 [![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?logo=googlechrome&logoColor=white)](#overview)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-compatible-7c5cd8.svg)](https://modelcontextprotocol.io)
 [![JSON-RPC 2.0](https://img.shields.io/badge/JSON--RPC-2.0-orange.svg)](https://www.jsonrpc.org/specification)
