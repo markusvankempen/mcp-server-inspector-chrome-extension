@@ -97,7 +97,7 @@ PRE-CONFIGURED PRESETS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 • Local Test Server: http://127.0.0.1:3000/mcp
-• IBM Cloud Code Engine Live Demo: https://mcp-ticket-demo.29m5mrru3s3n.ca-tor.codeengine.appdomain.cloud/mcp
+• Render Cloud Live Demo: https://mcp-ticket-demo.onrender.com/mcp
 • Custom Endpoint: Connect to any localhost, intranet, or cloud-hosted MCP endpoint.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -141,7 +141,7 @@ TEST INSTRUCTIONS  (reviewer form)
 --------------------------------------------------------------------------------
 
 1. Install and launch the extension. Click the extension toolbar icon to open the full-screen Inspector workbench (or open index.html directly).
-2. The server preset dropdown defaults to "IBM Code Engine (Live Demo)" (or "Local Test Server: http://127.0.0.1:3000/mcp"). Click "Connect".
+2. The server preset dropdown defaults to "Render Cloud (Live Demo)" (or "Local Test Server: http://127.0.0.1:3000/mcp"). Click "Connect".
 3. Verify that the sidebar status card turns green ("Online") and loads the server name, tool count, and token metrics.
 4. Tab 1 ("3-Tier Spec Matrix"): Click "Run Specification Audit". Verify that the 3-tier matrix displays compliance results across Core Specifications, Accepted SEPs, and Proposed RFCs, complete with overall score and 1-click Markdown export.
 5. Tab 2 ("Tool Catalog & Runner"): Select any tool from the list (e.g. "describe_server" or "run_query"). Verify that the dynamically generated schema form loads. Click "Execute (tools/call)" to observe the live JSON response, duration latency (ms), and token metrics.

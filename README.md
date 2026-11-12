@@ -81,32 +81,43 @@ The **MCP Server Inspector & Spec Auditor** is built for developers, AI engineer
 
 ```
 mcp-server-inspector-chrome-extention/
-├── manifest.json              # Chrome Extension Manifest V3 configuration
-├── index.html                 # Full-screen developer workbench interface
-├── app.js                     # Main workbench controller & UI orchestration
-├── app.css                    # Modern developer UI stylesheet
-├── popup.html                 # Compact Chrome toolbar popup interface
-├── popup.js                   # Toolbar popup controller
-├── popup.css                  # Toolbar popup stylesheet
-├── background.js              # Extension service worker (launches full tab)
-├── mcp-client.js              # Core JSON-RPC 2.0 / Streamable HTTP client & token estimator
-├── spec-tester.js             # Automated 3-tier specification & tool validation engine
-├── test-local-server.js       # Standalone mock MCP test server with full SEP support
-├── run-test-suite.js          # Headless automated CLI verification test runner
-├── privacy.html               # Extension privacy policy HTML page
-├── PRIVACY.md                 # Extension privacy policy documentation
-├── package.json               # NPM scripts, test runner, and metadata
-├── store/
-│   ├── LISTING.txt            # Chrome Web Store submission package & copy
-│   └── example-LISTING.txt    # Reference submission package template
-└── icons/                     # Extension icons (16px, 48px, 128px)
+├── src/                       # Chrome extension (load THIS folder as "unpacked")
+│   ├── manifest.json          # Manifest V3 configuration
+│   ├── background.js          # Service worker (opens the full-tab workbench)
+│   ├── workbench/             # Full-screen developer workbench
+│   │   ├── index.html
+│   │   ├── app.js             # Main controller & UI orchestration
+│   │   └── app.css
+│   ├── popup/                 # Compact toolbar popup
+│   │   ├── popup.html
+│   │   ├── popup.js
+│   │   └── popup.css
+│   ├── lib/                   # Shared protocol logic
+│   │   ├── mcp-client.js      # JSON-RPC 2.0 / Streamable HTTP client & token estimator
+│   │   └── spec-tester.js     # Automated 3-tier specification & tool validation engine
+│   ├── pages/
+│   │   └── privacy.html       # Extension privacy policy page
+│   └── icons/                 # Extension icons (16, 32, 48, 128 px)
+├── test/                      # Test tooling
+│   ├── test-local-server.js   # Mock MCP server with full SEP support (+ static host for src/)
+│   ├── run-test-suite.js      # Headless automated CLI verification runner
+│   └── misc-tests.js          # Protocol edge-case & schema tests
+├── tools/                     # Build & asset generation scripts
+│   ├── build-dist.js          # Packages src/ into dist/ (zip + unpacked)
+│   ├── generate-icons.js      # Renders extension icons
+│   └── generate-screenshots.js# Renders store screenshots & promo tiles
+├── store/                     # Chrome Web Store listing copy, screenshots, promo tiles
+├── dist/                      # Build output (generated)
+├── PRIVACY.md                 # Privacy policy documentation
+├── package.json               # NPM scripts and metadata
+└── mise.toml                  # Mise tool/task configuration
 ```
 
 ---
 
 ## Detailed API & Function Reference
 
-### 1. `McpClient` (`mcp-client.js`)
+### 1. `McpClient` (`src/lib/mcp-client.js`)
 Handles JSON-RPC 2.0 over Streamable HTTP / POST, Server-Sent Events (SSE), and extension capability negotiation.
 
 | Function / Method | Parameters | Return Type | Description |
@@ -134,7 +145,7 @@ Handles JSON-RPC 2.0 over Streamable HTTP / POST, Server-Sent Events (SSE), and 
 
 ---
 
-### 2. `SpecTester` (`spec-tester.js`)
+### 2. `SpecTester` (`src/lib/spec-tester.js`)
 Automated specification compliance and tool contract validation engine.
 
 | Function / Method | Parameters | Return Type | Description |
@@ -169,7 +180,7 @@ Automated specification compliance and tool contract validation engine.
 
 ---
 
-### 3. Workbench UI Controller (`app.js`)
+### 3. Workbench UI Controller (`src/workbench/app.js`)
 
 | Function | Description |
 |---|---|
