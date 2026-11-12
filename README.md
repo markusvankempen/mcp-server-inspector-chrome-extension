@@ -75,6 +75,8 @@ The **MCP Server Inspector & Spec Auditor** is built for developers, AI engineer
 | ![Tools runner](store/screenshot-2-tools-runner.png) | ![Batch validation](store/screenshot-3-batch-validation.png) |
 | **README drift** | **Groups explorer** |
 | ![README drift](store/screenshot-4-readme-drift.png) | ![Groups explorer](store/screenshot-5-groups-explorer.png) |
+| **VS Code side panel** | |
+| ![VS Code side panel](store/screenshot-6-vscode-sidebar.png) | |
 
 ---
 
@@ -102,7 +104,7 @@ mcp-server-inspector-chrome-extention/
 ├── vscode-extension/          # VS Code extension (same workbench UI in a webview)
 │   ├── package.json           # Extension manifest (command, settings)
 │   ├── extension.js           # Extension host: webview, HTTP, SecretStorage
-│   ├── media/host-shim.js     # Webview shim: fetch / storage / clipboard -> host
+│   ├── media/                 # host-shim.js (webview <-> host bridge), sidebar.{html,css,js} (Activity Bar panel), icons
 │   └── webview/               # Generated: copy of src/workbench + src/lib (git-ignored)
 ├── test/                      # Test tooling
 │   ├── test-local-server.js   # Mock MCP server with full SEP support (+ static host for src/)
