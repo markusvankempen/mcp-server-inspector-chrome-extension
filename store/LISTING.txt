@@ -45,7 +45,7 @@ Inspect, validate, and audit Model Context Protocol (MCP) servers, tool JSONSche
 
 PERMISSION JUSTIFICATION
 storage & unlimitedStorage — persists user-configured endpoints, test settings, and authentication headers locally on this computer. Nothing is sent to external tracking servers.
-host_permissions (http://*/*, https://*/*) — required to allow direct JSON-RPC 2.0 communication between the browser inspector and user-specified local or remote MCP servers.
+host_permissions (http://localhost/*, http://127.0.0.1/*, https://mcp-ticket-demo.onrender.com/*) — allow JSON-RPC 2.0 communication with local MCP servers and the built-in demo server. Access to any other MCP server is requested per origin at runtime (optional_host_permissions) only when the user clicks Connect.
 declarativeNetRequestWithHostAccess — registers one session rule that removes the "Origin" request header from the extension's own MCP requests, so servers that reject browser Origins respond as they would to a standard MCP client.
 
 
@@ -133,8 +133,11 @@ PERMISSION JUSTIFICATION  (reviewer form)
 storage & unlimitedStorage:
 Used exclusively to save user-configured MCP server endpoint URLs, test profiles, and custom authentication headers (Bearer tokens, API keys) locally within the Chrome storage sandbox. Stored data is never transmitted to any external server or analytics service.
 
-host_permissions (http://*/*, https://*/*):
-Required to permit the extension to send standard JSON-RPC 2.0 HTTP POST requests directly to user-specified local (e.g. http://localhost:3000, http://127.0.0.1:8080) and remote (https://*.cloud) Model Context Protocol servers for testing and inspection.
+host_permissions (http://localhost/*, http://127.0.0.1/*, https://mcp-ticket-demo.onrender.com/*):
+Install-time access is limited to local development servers (localhost / 127.0.0.1, any port) and the built-in demo MCP server, so the extension works out of the box for the most common test targets and shows no broad "all sites" warning.
+
+optional_host_permissions (http://*/*, https://*/*):
+An MCP inspector must be able to connect to whichever MCP server URL the developer enters, so the set of hosts cannot be known in advance and activeTab does not apply (the target is a server endpoint, not the current tab). Therefore no broad access is granted at install. When the user clicks "Connect" (or picks a preset), the extension calls chrome.permissions.request for ONLY that server's origin (scheme + hostname) and the user approves it in Chrome's own prompt. Access is never requested without a user action, is limited to origins the user typed, and can be revoked at any time from chrome://extensions. The extension makes no requests to any other site and has no content scripts.
 
 declarativeNetRequestWithHostAccess:
 Used for exactly one dynamic session rule (id 1, action "modifyHeaders") that REMOVES the "Origin" request header. Many remote MCP servers validate the Origin header (as the MCP specification recommends, to prevent DNS-rebinding attacks) and reject the "chrome-extension://<id>" origin that Chrome attaches to extension requests with HTTP 403. Without this rule the inspector cannot connect to those servers and cannot audit them. The rule is narrowly scoped: it applies only to requests initiated by this extension itself (initiatorDomains = the extension ID), only to xmlhttprequest/other resource types, and the only requests this extension makes are to MCP server URLs the user enters. It never blocks, redirects, or modifies request/response bodies, never reads or alters page content, never touches other sites or other extensions' traffic, and does not alter any header other than Origin. It uses session rules, so nothing persists beyond the browser session. The "WithHostAccess" variant is used (instead of declarativeNetRequest) because it only takes effect on hosts already granted by host_permissions, so it grants no access beyond the declared host_permissions.

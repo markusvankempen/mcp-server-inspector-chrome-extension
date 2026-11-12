@@ -43,7 +43,7 @@ All stored data remains on your local machine and is **never** synchronized to e
 | Permission | Purpose & Justification |
 |---|---|
 | `storage` & `unlimitedStorage` | Used solely to persist user-configured endpoints, test configurations, and custom authentication headers locally within the browser. |
-| `host_permissions` (`http://*/*`, `https://*/*`) | Required to allow the extension client to send standard JSON-RPC 2.0 requests directly to user-specified local (`http://localhost:*`) or remote MCP servers. |
+| `host_permissions` (`localhost`, `127.0.0.1`, demo server) and `optional_host_permissions` (`http://*/*`, `https://*/*`) | Local development servers and the built-in demo server are available at install. Access to any other MCP server is requested per origin, at runtime, only when you click Connect and approve Chrome's prompt. It can be revoked at any time from `chrome://extensions`. |
 | `declarativeNetRequestWithHostAccess` | Registers a single session rule that removes the `Origin` header from the extension's own MCP requests so servers that reject browser origins respond as they would to a standard MCP client. It does not block, redirect, or read any traffic, and does not affect other sites or extensions. |
 
 ---
