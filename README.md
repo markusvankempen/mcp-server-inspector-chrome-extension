@@ -215,7 +215,7 @@ The complete submission package is located in [`store/LISTING.txt`](store/LISTIN
 - **Extension Name:** MCP Server Inspector & Spec Auditor
 - **Short Description:** Developer workbench for testing Model Context Protocol (MCP) servers, tool JSONSchemas, SEPs, latency, and progressive disclosure. (128 characters)
 - **Category:** Developer Tools
-- **Permissions:** `storage`, `unlimitedStorage`, `host_permissions: ["http://*/*", "https://*/*"]`
+- **Permissions:** `storage`, `unlimitedStorage`, `declarativeNetRequestWithHostAccess`, `host_permissions: ["http://*/*", "https://*/*"]`
 - **Images Required:**
   - `screenshot-1-spec-matrix.png` (1280×800)
   - `screenshot-2-tools-runner.png` (1280×800)

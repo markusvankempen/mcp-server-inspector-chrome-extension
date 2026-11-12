@@ -46,6 +46,7 @@ Inspect, validate, and audit Model Context Protocol (MCP) servers, tool JSONSche
 PERMISSION JUSTIFICATION
 storage & unlimitedStorage — persists user-configured endpoints, test settings, and authentication headers locally on this computer. Nothing is sent to external tracking servers.
 host_permissions (http://*/*, https://*/*) — required to allow direct JSON-RPC 2.0 communication between the browser inspector and user-specified local or remote MCP servers.
+declarativeNetRequestWithHostAccess — registers one session rule that removes the "Origin" request header from the extension's own MCP requests, so servers that reject browser Origins respond as they would to a standard MCP client.
 
 
 --------------------------------------------------------------------------------
@@ -134,6 +135,9 @@ Used exclusively to save user-configured MCP server endpoint URLs, test profiles
 
 host_permissions (http://*/*, https://*/*):
 Required to permit the extension to send standard JSON-RPC 2.0 HTTP POST requests directly to user-specified local (e.g. http://localhost:3000, http://127.0.0.1:8080) and remote (https://*.cloud) Model Context Protocol servers for testing and inspection.
+
+declarativeNetRequestWithHostAccess:
+Used for exactly one dynamic session rule (id 1, action "modifyHeaders") that REMOVES the "Origin" request header. Many remote MCP servers validate the Origin header (as the MCP specification recommends, to prevent DNS-rebinding attacks) and reject the "chrome-extension://<id>" origin that Chrome attaches to extension requests with HTTP 403. Without this rule the inspector cannot connect to those servers and cannot audit them. The rule is narrowly scoped: it applies only to requests initiated by this extension itself (initiatorDomains = the extension ID), only to xmlhttprequest/other resource types, and the only requests this extension makes are to MCP server URLs the user enters. It never blocks, redirects, or modifies request/response bodies, never reads or alters page content, never touches other sites or other extensions' traffic, and does not alter any header other than Origin. It uses session rules, so nothing persists beyond the browser session. The "WithHostAccess" variant is used (instead of declarativeNetRequest) because it only takes effect on hosts already granted by host_permissions, so it grants no access beyond the declared host_permissions.
 
 
 --------------------------------------------------------------------------------
