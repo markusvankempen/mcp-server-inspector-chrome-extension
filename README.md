@@ -2,11 +2,12 @@
 
 # MCP Server Inspector & Spec Auditor
 
-**A Manifest V3 Chrome extension and developer workbench for exploring, validating, and auditing Model Context Protocol (MCP) servers.**
+**A Manifest V3 Chrome extension and VS Code extension for exploring, validating, and auditing Model Context Protocol (MCP) servers.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.2.2-brightgreen.svg)](#overview)
 [![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?logo=googlechrome&logoColor=white)](#overview)
+[![VS Code](https://img.shields.io/badge/VS_Code_Extension-1.90%2B-007ACC?logo=visualstudiocode&logoColor=white)](#overview)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-compatible-7c5cd8.svg)](https://modelcontextprotocol.io)
 [![JSON-RPC 2.0](https://img.shields.io/badge/JSON--RPC-2.0-orange.svg)](https://www.jsonrpc.org/specification)
 [![JSON Schema](https://img.shields.io/badge/JSON_Schema-Draft--07-lightgrey.svg)](https://json-schema.org/draft-07)
@@ -30,7 +31,7 @@
 **Author:** Markus van Kempen
 [Research | Floor 7½ 🏢🤏](https://markusvankempen.github.io/)
 
-**Topics:** `mcp` · `model-context-protocol` · `chrome-extension` · `manifest-v3` · `inspector` · `json-rpc` · `jsonschema` · `spec-compliance` · `llm-tools` · `ai-agents` · `developer-tools` · `devtools` · `sse` · `streamable-http`
+**Topics:** `mcp` · `model-context-protocol` · `chrome-extension` · `vscode-extension` · `manifest-v3` · `inspector` · `json-rpc` · `jsonschema` · `spec-compliance` · `llm-tools` · `ai-agents` · `developer-tools` · `devtools` · `sse` · `streamable-http`
 
 ---
 
@@ -98,12 +99,19 @@ mcp-server-inspector-chrome-extention/
 │   ├── pages/
 │   │   └── privacy.html       # Extension privacy policy page
 │   └── icons/                 # Extension icons (16, 32, 48, 128 px)
+├── vscode-extension/          # VS Code extension (same workbench UI in a webview)
+│   ├── package.json           # Extension manifest (command, settings)
+│   ├── extension.js           # Extension host: webview, HTTP, SecretStorage
+│   ├── media/host-shim.js     # Webview shim: fetch / storage / clipboard -> host
+│   └── webview/               # Generated: copy of src/workbench + src/lib (git-ignored)
 ├── test/                      # Test tooling
 │   ├── test-local-server.js   # Mock MCP server with full SEP support (+ static host for src/)
 │   ├── run-test-suite.js      # Headless automated CLI verification runner
+│   ├── vscode-extension-tests.js # VS Code host, CSP and shim tests
 │   └── misc-tests.js          # Protocol edge-case & schema tests
 ├── tools/                     # Build & asset generation scripts
 │   ├── build-dist.js          # Packages src/ into dist/ (zip + unpacked)
+│   ├── build-vscode.js        # Stages shared UI and packages the .vsix
 │   ├── generate-icons.js      # Renders extension icons
 │   └── generate-screenshots.js# Renders store screenshots & promo tiles
 ├── store/                     # Chrome Web Store listing copy, screenshots, promo tiles
@@ -229,7 +237,7 @@ The complete submission package is located in [`store/LISTING.txt`](store/LISTIN
 
 ## Source Code & Access
 
-This repository contains **documentation only** (README, privacy policy, store listing copy and screenshots). The extension source code is maintained in a private repository.
+This repository contains **documentation only** (README, privacy policy, store listing copy and screenshots). The Chrome and VS Code extension source code is maintained in a private repository.
 
 ---
 
