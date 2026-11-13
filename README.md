@@ -5,24 +5,24 @@
 **A Manifest V3 Chrome extension and VS Code extension for exploring, validating, and auditing Model Context Protocol (MCP) servers.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2.2-brightgreen.svg)](#overview)
-[![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?logo=googlechrome&logoColor=white)](#overview)
-[![VS Code](https://img.shields.io/badge/VS_Code_Extension-1.90%2B-007ACC?logo=visualstudiocode&logoColor=white)](#overview)
+[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen.svg)](src/manifest.json)
+[![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?logo=googlechrome&logoColor=white)](src/manifest.json)
+[![VS Code](https://img.shields.io/badge/VS_Code_Extension-1.90%2B-007ACC?logo=visualstudiocode&logoColor=white)](vscode-extension)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-compatible-7c5cd8.svg)](https://modelcontextprotocol.io)
 [![JSON-RPC 2.0](https://img.shields.io/badge/JSON--RPC-2.0-orange.svg)](https://www.jsonrpc.org/specification)
 [![JSON Schema](https://img.shields.io/badge/JSON_Schema-Draft--07-lightgrey.svg)](https://json-schema.org/draft-07)
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES_Modules-F7DF1E?logo=javascript&logoColor=black)](#overview)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES_Modules-F7DF1E?logo=javascript&logoColor=black)](package.json)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](#overview)
+[![Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](package.json)
 [![Privacy](https://img.shields.io/badge/privacy-no_telemetry-informational.svg)](PRIVACY.md)
 
-[![GitHub stars](https://img.shields.io/github/stars/markusvankempen/mcp-server-inspector-chrome-extention?style=social)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extention/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/markusvankempen/mcp-server-inspector-chrome-extention?style=social)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extention/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/markusvankempen/mcp-server-inspector-chrome-extention)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extention/issues)
-[![Last commit](https://img.shields.io/github/last-commit/markusvankempen/mcp-server-inspector-chrome-extention)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extention/commits/main)
-[![Repo size](https://img.shields.io/github/repo-size/markusvankempen/mcp-server-inspector-chrome-extention)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extention)
-[![Top language](https://img.shields.io/github/languages/top/markusvankempen/mcp-server-inspector-chrome-extention)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extention)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extention/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/markusvankempen/mcp-server-inspector-chrome-extension?style=social)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/markusvankempen/mcp-server-inspector-chrome-extension?style=social)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/markusvankempen/mcp-server-inspector-chrome-extension)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/issues)
+[![Last commit](https://img.shields.io/github/last-commit/markusvankempen/mcp-server-inspector-chrome-extension)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/commits/main)
+[![Repo size](https://img.shields.io/github/repo-size/markusvankempen/mcp-server-inspector-chrome-extension)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension)
+[![Top language](https://img.shields.io/github/languages/top/markusvankempen/mcp-server-inspector-chrome-extension)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/pulls)
 
 ![Spec compliance matrix](store/screenshot-1-spec-matrix.png)
 
@@ -43,7 +43,9 @@
 - [Codebase Architecture & File Directory](#codebase-architecture--file-directory)
 - [Detailed API & Function Reference](#detailed-api--function-reference)
 - [Chrome Web Store Submission Package](#chrome-web-store-submission-package)
-- [Source Code & Access](#source-code--access)
+- [Quick Start & Automated Testing](#quick-start--automated-testing)
+- [Installing into Google Chrome](#installing-into-google-chrome)
+- [VS Code Extension](#vs-code-extension)
 - [Privacy](#privacy)
 - [License](#license)
 
@@ -83,7 +85,7 @@ The **MCP Server Inspector & Spec Auditor** is built for developers, AI engineer
 ## Codebase Architecture & File Directory
 
 ```
-mcp-server-inspector-chrome-extention/
+mcp-server-inspector-chrome-extension/
 ├── src/                       # Chrome extension (load THIS folder as "unpacked")
 │   ├── manifest.json          # Manifest V3 configuration
 │   ├── background.js          # Service worker (opens the full-tab workbench)
@@ -108,7 +110,8 @@ mcp-server-inspector-chrome-extention/
 │   ├── views.js               # Explorer + Workbench navigation tree views
 │   ├── tool-args.js           # Schema -> JSONC argument template, JSONC parsing
 │   ├── media/                 # host-shim.js (webview <-> host bridge), sidebar.{html,css,js} (Server view), icons
-│   └── webview/               # Generated: copy of src/workbench + src/lib (git-ignored)
+│   ├── webview/               # Generated: copy of src/workbench + src/lib (git-ignored)
+│   └── dev-server/            # Generated: bundled copy of the mock server for the local dev server (git-ignored)
 ├── test/                      # Test tooling
 │   ├── test-local-server.js   # Mock MCP server with full SEP support (+ static host for src/)
 │   ├── run-test-suite.js      # Headless automated CLI verification runner
@@ -240,9 +243,52 @@ The complete submission package is located in [`store/LISTING.txt`](store/LISTIN
 
 ---
 
-## Source Code & Access
+## Quick Start & Automated Testing
 
-This repository contains **documentation only** (README, privacy policy, store listing copy and screenshots). The Chrome and VS Code extension source code is maintained in a private repository.
+### 1. Run Local Mock Server
+```bash
+cd mcp-server-inspector-chrome-extension
+npm start
+```
+- Endpoint: `http://127.0.0.1:3000/mcp`
+- Web Dashboard: `http://127.0.0.1:3000/workbench/index.html`
+
+### 2. Run Automated Verification Test Suite
+```bash
+cd mcp-server-inspector-chrome-extension
+npm test
+```
+
+---
+
+## Installing into Google Chrome
+
+1. Open **Google Chrome** and navigate to `chrome://extensions`.
+2. Enable **Developer mode** (toggle in the top-right corner).
+3. Click **Load unpacked**.
+4. Select the `src` directory of this repository.
+5. Click the **MCP Server Inspector** icon in your Chrome toolbar to launch the workbench!
+
+A packaged build is also available from the [Releases](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/releases) page.
+
+---
+
+## VS Code Extension
+
+The same workbench runs inside VS Code. The UI code in `src/workbench` and `src/lib` is shared; the extension host in [`vscode-extension/`](vscode-extension) performs HTTP requests (no browser CORS limits), keeps credentials in VS Code **SecretStorage**, and the webview runs under a strict Content-Security-Policy.
+
+```bash
+npm run build:vscode        # stages the shared UI and writes dist/mcp-server-inspector-vscode-<version>.vsix
+code --install-extension dist/mcp-server-inspector-vscode-1.3.0.vsix
+```
+
+Then click the **MCP Inspector** icon in the Activity Bar:
+
+- **Server** view: connect to an MCP server and see its stats, or start the bundled **local dev server** (sample MCP server on `127.0.0.1`, port set by `mcpInspector.devServer.port`, default 3000) with one click.
+- **Explorer** view: native tree of Tools, Resources, Prompts and Groups. Click a tool to open a schema-generated **arguments editor**, click the **Run** CodeLens, and read the outcome in a JSON editor beside it.
+- **Workbench** view: the workbench navigation (spec audit, validation, drift, token budget, groups, raw JSON-RPC, ...) as a native tree; each entry opens that section in an editor tab.
+
+The editor-title toolbar icon and the status bar button open the workbench too. To develop, run `npm run stage:vscode` and then `code --extensionDevelopmentPath=vscode-extension`.
 
 ---
 
