@@ -5,7 +5,7 @@
 **A Manifest V3 Chrome extension and VS Code extension for exploring, validating, and auditing Model Context Protocol (MCP) servers.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen.svg)](src/manifest.json)
+[![Version](https://img.shields.io/badge/version-1.3.1-brightgreen.svg)](src/manifest.json)
 [![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?logo=googlechrome&logoColor=white)](src/manifest.json)
 [![VS Code](https://img.shields.io/badge/VS_Code_Extension-1.90%2B-007ACC?logo=visualstudiocode&logoColor=white)](vscode-extension)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-compatible-7c5cd8.svg)](https://modelcontextprotocol.io)
@@ -278,8 +278,8 @@ A packaged build is also available from the [Releases](https://github.com/markus
 The same workbench runs inside VS Code. The UI code in `src/workbench` and `src/lib` is shared; the extension host in [`vscode-extension/`](vscode-extension) performs HTTP requests (no browser CORS limits), keeps credentials in VS Code **SecretStorage**, and the webview runs under a strict Content-Security-Policy.
 
 ```bash
-npm run build:vscode        # stages the shared UI and writes dist/mcp-server-inspector-vscode-<version>.vsix
-code --install-extension dist/mcp-server-inspector-vscode-1.3.0.vsix
+npm run build:vscode        # stages the shared UI and writes dist/mcp-server-inspector-auditor-<version>.vsix
+code --install-extension dist/mcp-server-inspector-auditor-1.3.1.vsix
 ```
 
 Then click the **MCP Inspector** icon in the Activity Bar:
