@@ -5,7 +5,7 @@
 **A Manifest V3 Chrome extension and VS Code extension for exploring, validating, and auditing Model Context Protocol (MCP) servers.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.4.0-brightgreen.svg)](src/manifest.json)
+[![Version](https://img.shields.io/badge/version-1.6.0-brightgreen.svg)](src/manifest.json)
 [![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?logo=googlechrome&logoColor=white)](src/manifest.json)
 [![VS Code](https://img.shields.io/badge/VS_Code_Extension-1.90%2B-007ACC?logo=visualstudiocode&logoColor=white)](vscode-extension)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-compatible-7c5cd8.svg)](https://modelcontextprotocol.io)
@@ -15,6 +15,19 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](package.json)
 [![Privacy](https://img.shields.io/badge/privacy-no_telemetry-informational.svg)](PRIVACY.md)
+
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/markusvankempen.mcp-server-inspector-auditor?label=VS%20Code%20Marketplace&logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=markusvankempen.mcp-server-inspector-auditor)
+[![Marketplace installs](https://img.shields.io/visual-studio-marketplace/i/markusvankempen.mcp-server-inspector-auditor?label=installs)](https://marketplace.visualstudio.com/items?itemName=markusvankempen.mcp-server-inspector-auditor)
+[![Open VSX](https://img.shields.io/open-vsx/v/markusvankempen/mcp-server-inspector-auditor?label=Open%20VSX&logo=eclipseide&logoColor=white)](https://open-vsx.org/extension/markusvankempen/mcp-server-inspector-auditor)
+[![Spec audit](https://img.shields.io/badge/audit-spec_conformance-blue.svg)](#features)
+[![Crypto posture](https://img.shields.io/badge/audit-crypto_posture-teal.svg)](#features)
+[![Security hygiene](https://img.shields.io/badge/audit-security_hygiene-red.svg)](#features)
+[![Post-quantum](https://img.shields.io/badge/TLS-X25519MLKEM768_check-8A2BE2.svg)](#features)
+[![CBOM](https://img.shields.io/badge/CycloneDX-CBOM_1.6-1f6feb.svg)](#features)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](#quick-start--automated-testing)
+[![Platforms](https://img.shields.io/badge/platform-Chrome%20%7C%20Edge%20%7C%20Brave%20%7C%20VS%20Code-lightgrey.svg)](#installing-into-google-chrome)
+[![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen.svg)](vscode-extension/CHANGELOG.md)
+[![Made with IBM Bob](https://img.shields.io/badge/made_with-IBM_Bob-0f62fe.svg)](https://www.ibm.com)
 
 [![GitHub stars](https://img.shields.io/github/stars/markusvankempen/mcp-server-inspector-chrome-extension?style=social)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/markusvankempen/mcp-server-inspector-chrome-extension?style=social)](https://github.com/markusvankempen/mcp-server-inspector-chrome-extension/network/members)
@@ -31,7 +44,7 @@
 **Author:** Markus van Kempen
 [Research | Floor 7½ 🏢🤏](https://markusvankempen.github.io/)
 
-**Topics:** `mcp` · `model-context-protocol` · `chrome-extension` · `vscode-extension` · `manifest-v3` · `inspector` · `json-rpc` · `jsonschema` · `spec-compliance` · `llm-tools` · `ai-agents` · `developer-tools` · `devtools` · `sse` · `streamable-http`
+**Topics:** `mcp` · `model-context-protocol` · `chrome-extension` · `vscode-extension` · `manifest-v3` · `inspector` · `json-rpc` · `jsonschema` · `spec-compliance` · `llm-tools` · `ai-agents` · `developer-tools` · `devtools` · `sse` · `streamable-http` · `security` · `prompt-injection` · `tool-poisoning` · `post-quantum` · `tls` · `cbom` · `cyclonedx` · `owasp` · `audit` · `linter` · `conformance-testing` · `mcp-server` · `mcp-client` · `ai-security`
 
 ---
 
@@ -67,6 +80,7 @@ The **MCP Server Inspector & Spec Auditor** is built for developers, AI engineer
 - **Progressive disclosure groups explorer** (`group/list`, `group/get`) with token-savings estimates.
 - **Raw JSON-RPC console** with templates; Streamable HTTP and SSE support.
 - **Tier 4: Transport & Crypto Posture** (black-box, no code scanning) with its own score, kept out of the spec score: scheme, TLS version, cipher suite, key-exchange group (hybrid post-quantum `X25519MLKEM768` vs classical), certificate and the JWT algorithm of your Bearer token (header only; the token is never shown or stored). Findings use three levels: *broken now*, *quantum-vulnerable (advisory)* and *quantum-ready*. Includes a CycloneDX CBOM fragment export. The TLS handshake checks need the VS Code edition (browsers cannot read TLS details); the Chrome extension reports them as "unknown". Loopback endpoints are skipped, and the report notes that a CDN or proxy's TLS is what you observe for proxied endpoints.
+- **Tier 5: Security Hygiene** (black-box heuristics, no code scanning) with its own score, kept out of the spec score. It scans every tool name, title, description and parameter doc for hidden or bidirectional Unicode characters, injection-style wording ("ignore previous instructions", "do not tell the user"), references to credential files, long encoded blobs, oversized descriptions, duplicate or malformed names and destructive-looking tools without safety hints. A **tool fingerprint** (SHA-256 per tool, stored locally per endpoint) reports when descriptions, schemas or annotations change after you accepted them (the "rug pull"). **Active probes are opt-in** (checkbox, off by default) and cover unauthenticated access, Origin validation (VS Code edition only), OAuth protected-resource discovery, HSTS, CORS, server banners, error-message leakage and session-ID quality. Pattern checks are heuristics: a clean report is not a guarantee.
 - **Zero runtime dependencies**, no telemetry; settings are stored locally in `chrome.storage.local`.
 
 ---
@@ -101,6 +115,8 @@ mcp-server-inspector-chrome-extension/
 │   ├── lib/                   # Shared protocol logic
 │   │   ├── mcp-client.js      # JSON-RPC 2.0 / Streamable HTTP client & token estimator
 │   │   ├── crypto-posture.js  # Tier 4 crypto posture evaluation, JWT header check, CBOM fragment
+│   │   ├── security-hygiene.js# Tier 5 tool-metadata scan, fingerprint (rug-pull) diff, opt-in probes
+│   │   ├── host-access.js     # Requests optional host permission per server origin at runtime
 │   │   └── spec-tester.js     # Automated 3-tier specification & tool validation engine
 │   ├── pages/
 │   │   └── privacy.html       # Extension privacy policy page
@@ -120,6 +136,7 @@ mcp-server-inspector-chrome-extension/
 │   ├── run-test-suite.js      # Headless automated CLI verification runner
 │   ├── vscode-extension-tests.js # VS Code host, CSP and shim tests
 │   ├── crypto-posture-tests.js   # Crypto posture logic + TLS probe against local TLS servers
+│   ├── security-hygiene-tests.js # Hygiene scan, fingerprint and probe tests against local servers
 │   └── misc-tests.js          # Protocol edge-case & schema tests
 ├── tools/                     # Build & asset generation scripts
 │   ├── build-dist.js          # Packages src/ into dist/ (zip + unpacked)
@@ -146,22 +163,29 @@ Handles JSON-RPC 2.0 over Streamable HTTP / POST, Server-Sent Events (SSE), and 
 | `setEndpoint(url)` | `url: string` | `void` | Updates the target MCP server endpoint URL. |
 | `setHeaders(headers)` | `headers: Object` | `void` | Updates HTTP headers applied to outbound requests (Auth, API keys, session IDs). |
 | `estimateTokens(payload)` *(static)* | `payload: string \| Object` | `{ bytes, tokens, chars }` | Calculates estimated token consumption and byte weight (~3.8–4 bytes/token heuristic). |
-| `request(method, params, options)` | `method: string, params: Object, options: Object` | `Promise<{ result, _meta, duration, metrics, raw }>` | Sends JSON-RPC 2.0 HTTP POST request, handles SSE frames, extracts session IDs, and parses `_meta`. |
-| `initialize()` | *none* | `Promise<Object>` | Performs protocol lifecycle handshake (`initialize`), captures server capabilities, and sends `notifications/initialized`. |
+| `request(method, params, options)` | `method: string, params: Object, options: Object` | `Promise<{ result, _meta, duration, metrics, raw, notifications, serverRequests }>` | Sends a JSON-RPC 2.0 POST. SSE responses are read event by event: notifications and server-to-client requests that arrive before the response are collected, and server requests are answered while the stream is open. |
+| `buildRequestHeaders()` | *none* | `Object` | Headers for every POST: custom headers, `Mcp-Session-Id`, and `MCP-Protocol-Version` once `initialize` has negotiated a version. |
+| `parseSseEvents(text)` / `createSseParser(onEvent)` *(static)* | `text: string` / `onEvent: (data) => void` | `string[]` / parser | Splits Server-Sent Events into data payloads, either from complete text or incrementally from a stream. |
+| `initialize()` | *none* | `Promise<Object>` | Performs protocol lifecycle handshake (`initialize`), records the negotiated protocol version and server capabilities, and sends `notifications/initialized`. |
 | `notify(method, params)` | `method: string, params: Object` | `Promise<void>` | Sends a one-way notification to the server without expecting a response. |
-| `listTools(cursor)` | `cursor?: string` | `Promise<Object>` | Retrieves tool definitions and schemas via `tools/list`. |
+| `ping()` | *none* | `Promise<Object>` | Liveness check via `ping`; the result should be `{}`. |
+| `listAllPages(method, key, maxPages)` | `method: string, key: string, maxPages?: number` | `Promise<Object>` | Follows `nextCursor` across pages and merges `result[key]`; reports `pages` and `truncated`. |
+| `listTools(cursor)` | `cursor?: string` | `Promise<Object>` | Retrieves tool definitions via `tools/list`. Without a cursor, all pages are fetched. |
 | `callTool(name, args, meta)` | `name: string, args: Object, meta: Object` | `Promise<Object>` | Invokes a specific tool via `tools/call` with arguments and optional `_meta` capabilities. |
-| `listResources(cursor)` | `cursor?: string` | `Promise<Object>` | Discovers context data and file resources via `resources/list`. |
+| `listResources(cursor)` | `cursor?: string` | `Promise<Object>` | Discovers context data and file resources via `resources/list`. Without a cursor, all pages are fetched. |
 | `readResource(uri)` | `uri: string` | `Promise<Object>` | Reads resource content by URI via `resources/read`. |
-| `listPrompts(cursor)` | `cursor?: string` | `Promise<Object>` | Discovers prompt templates via `prompts/list`. |
-| `listGroups(cursor)` | `cursor?: string` | `Promise<Object>` | Discovers progressive disclosure capability groups (`group/list` with fallback to `groups/list`). |
-| `getGroup(name)` | `name: string` | `Promise<Object>` | Retrieves scoped tool definitions and instructions for a group via `group/get`. |
+| `listPrompts(cursor)` | `cursor?: string` | `Promise<Object>` | Discovers prompt templates via `prompts/list`. Without a cursor, all pages are fetched. |
+| `getPrompt(name, args)` | `name: string, args?: Object` | `Promise<Object>` | Renders a prompt template into messages via `prompts/get`. |
+| `listGroups(cursor)` | `cursor?: string` | `Promise<Object>` | Discovers progressive disclosure capability groups (`groups/list` with fallback to `group/list`). |
+| `getGroup(name)` | `name: string` | `Promise<Object>` | Retrieves scoped tool definitions and instructions for a group (`groups/get` with fallback to `group/get`). |
 | `listTasks(cursor)` | `cursor?: string` | `Promise<Object>` | Lists asynchronous tasks via `tasks/list`. |
 | `getTask(taskId)` | `taskId: string` | `Promise<Object>` | Fetches task status and result via `tasks/get`. |
 | `streamTask(taskId, after)` | `taskId: string, after?: number` | `Promise<Object>` | Streams task events with cursor resume support via `tasks/stream`. |
 | `getServerCard()` | *none* | `Promise<Object>` | Fetches server pre-connection metadata card via `server/card` (SEP-2127). |
 | `listSkills(cursor)` | `cursor?: string` | `Promise<Object>` | Lists compound agentic skill workflows via `skills/list` (SEP-2640). |
 | `getSkill(name)` | `name: string` | `Promise<Object>` | Fetches skill manifest and steps via `skills/get` (SEP-2640). |
+
+**Client capabilities.** By default the client declares only `roots` and answers `roots/list` with `options.roots` (empty by default). It answers a server's `ping` with `{}` and replies `-32601` to any other server request (such as `sampling/createMessage` or `elicitation/create`), so the server is never left waiting. The `onMessage` option receives every server notification and request, and `serverRequestCounts` tallies the requests per method.
 
 ---
 
@@ -172,18 +196,20 @@ Automated specification compliance and tool contract validation engine.
 |---|---|---|---|
 | `constructor(client)` | `client: McpClient` | `SpecTester` | Initializes tester instance with target client and 3-tier result structures. |
 | `validateToolSchema(tool)` *(static)* | `tool: Object` | `{ valid, score, errors, warnings, details }` | Deeply audits a tool definition against MCP JSONSchema Draft-07 specs and SEP-1850 safety hints. |
-| `runFullAudit(targetVersion)` | `targetVersion: string` | `Promise<Object>` | Runs comprehensive 3-tier probe suite and computes 0–100% compliance score. |
-| `addSpecResult(...)` | `tierKey, specKey, title, refId, status, details, summaryOrReason, impact, refUrl` | `Object` | Formats and appends an individual specification compliance result to a tier. |
+| `runFullAudit(targetVersion)` | `targetVersion: string` | `Promise<Object>` | Runs comprehensive 3-tier probe suite and computes 0–100% compliance score over SUPPORTED and UNSUPPORTED results; INFO results are listed in `informational` and not scored. |
+| `addSpecResult(...)` | `tierKey, specKey, title, refId, status, details, summaryOrReason, impact, refUrl` | `Object` | Formats and appends an individual specification compliance result (`SUPPORTED`, `UNSUPPORTED` or `INFO`) to a tier. |
+| `auditPing()` | *none* | `Promise<void>` | Checks that `ping` is answered with an empty result. |
+| `auditClientFeature(spec)` | `spec: Object` | `void` | Reports a client capability (roots, sampling, elicitation): SUPPORTED when the server was seen sending the matching request, otherwise INFO. |
 | `logResult(...)` | `category, testName, status, details, advice` | `Object` | Records diagnostic probe trace entry. |
 | `auditInitialize()` | *none* | `Promise<void>` | Tests protocol handshake (`initialize`) and capabilities negotiation (2026-07-28 §2.1). |
 | `auditJsonRpc()` | *none* | `Promise<void>` | Verifies strict `-32601 Method Not Found` JSON-RPC 2.0 error handling. |
 | `auditTools()` | *none* | `Promise<Array>` | Evaluates `tools/list` endpoint and schema declarations. |
 | `auditToolSchemaCompliance(tools)` | `tools: Array` | `Promise<void>` | Audits JSONSchema Draft-07 compliance across all server tools. |
 | `auditResources()` | *none* | `Promise<void>` | Audits `resources/list` context resources support. |
-| `auditPrompts()` | *none* | `Promise<void>` | Audits `prompts/list` reusable prompt template support. |
+| `auditPrompts()` | *none* | `Promise<void>` | Audits `prompts/list` and renders the first prompt with `prompts/get`. |
 | `auditToolAnnotations(tools)` | `tools: Array` | `Promise<void>` | Audits tool safety annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint` — SEP-1850). |
-| `auditRootsSupport()` | *none* | `Promise<void>` | Audits workspace roots and filesystem boundary support (SEP-2636). |
-| `auditSamplingSupport()` | *none* | `Promise<void>` | Audits server-initiated LLM sampling support (SEP-1577). |
+| `auditRootsSupport()` | *none* | `Promise<void>` | Reports whether the server requested `roots/list` from the client (SEP-2636); not scored if unobserved. |
+| `auditSamplingSupport()` | *none* | `Promise<void>` | Reports whether the server sent `sampling/createMessage` (SEP-1577); not scored if unobserved. |
 | `auditCatalogAndQueryPattern(tools)`| `tools: Array` | `Promise<void>` | Audits implementation of Catalog + Query pattern (`describe_server`, `get_schema`, `run_query`). |
 | `auditServerCard()` | *none* | `Promise<void>` | Audits Server Card discovery metadata (SEP-2127). |
 | `auditTtlCaching()` | *none* | `Promise<void>` | Audits response TTL caching hints on list results (SEP-2549). |
@@ -192,7 +218,7 @@ Automated specification compliance and tool contract validation engine.
 | `auditToolFailureClassification()` | *none* | `Promise<void>` | Audits structured error classification (`_meta["io.modelcontextprotocol/toolFailure"]` — SEP-3313). |
 | `auditTasksAndStreaming()` | *none* | `Promise<void>` | Audits resumable tasks and cursor streams (SEP-2663 / SEP-2694). |
 | `auditSkillsExtension()` | *none* | `Promise<void>` | Audits compound agentic skills extension (SEP-2640). |
-| `auditElicitationSupport()` | *none* | `Promise<void>` | Audits URL mode elicitation and user consent support (SEP-1036). |
+| `auditElicitationSupport()` | *none* | `Promise<void>` | Reports whether the server sent `elicitation/create` or declares the elicitation extension (SEP-1036); not scored otherwise. |
 | `auditEventsAndWebhooks()` | *none* | `Promise<void>` | Audits push events and webhook notifications (SEP-3415). |
 | `testAllTools()` | *none* | `Promise<Array>` | Executes automated batch dry-run tests and schema scoring across all server tools. |
 | `analyzeReadmeDrift(readmeText, liveState)` | `readmeText: string, liveState: Object` | `Object` | Compares README.md documentation claims against runtime server discovery. |
@@ -283,7 +309,7 @@ The same workbench runs inside VS Code. The UI code in `src/workbench` and `src/
 
 ```bash
 npm run build:vscode        # stages the shared UI and writes dist/mcp-server-inspector-auditor-<version>.vsix
-code --install-extension dist/mcp-server-inspector-auditor-1.4.0.vsix
+code --install-extension dist/mcp-server-inspector-auditor-1.6.0.vsix
 ```
 
 Then click the **MCP Inspector** icon in the Activity Bar:
