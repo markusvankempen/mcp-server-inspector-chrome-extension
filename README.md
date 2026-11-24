@@ -5,7 +5,7 @@
 **A Manifest V3 Chrome extension and VS Code extension for exploring, validating, and auditing Model Context Protocol (MCP) servers.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.1-brightgreen.svg)](src/manifest.json)
+[![Version](https://img.shields.io/badge/version-1.4.0-brightgreen.svg)](src/manifest.json)
 [![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?logo=googlechrome&logoColor=white)](src/manifest.json)
 [![VS Code](https://img.shields.io/badge/VS_Code_Extension-1.90%2B-007ACC?logo=visualstudiocode&logoColor=white)](vscode-extension)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-compatible-7c5cd8.svg)](https://modelcontextprotocol.io)
@@ -66,6 +66,7 @@ The **MCP Server Inspector & Spec Auditor** is built for developers, AI engineer
 - **README drift analyzer** comparing GitHub README claims against live server discovery.
 - **Progressive disclosure groups explorer** (`group/list`, `group/get`) with token-savings estimates.
 - **Raw JSON-RPC console** with templates; Streamable HTTP and SSE support.
+- **Tier 4: Transport & Crypto Posture** (black-box, no code scanning) with its own score, kept out of the spec score: scheme, TLS version, cipher suite, key-exchange group (hybrid post-quantum `X25519MLKEM768` vs classical), certificate and the JWT algorithm of your Bearer token (header only; the token is never shown or stored). Findings use three levels: *broken now*, *quantum-vulnerable (advisory)* and *quantum-ready*. Includes a CycloneDX CBOM fragment export. The TLS handshake checks need the VS Code edition (browsers cannot read TLS details); the Chrome extension reports them as "unknown". Loopback endpoints are skipped, and the report notes that a CDN or proxy's TLS is what you observe for proxied endpoints.
 - **Zero runtime dependencies**, no telemetry; settings are stored locally in `chrome.storage.local`.
 
 ---
@@ -99,6 +100,7 @@ mcp-server-inspector-chrome-extension/
 │   │   └── popup.css
 │   ├── lib/                   # Shared protocol logic
 │   │   ├── mcp-client.js      # JSON-RPC 2.0 / Streamable HTTP client & token estimator
+│   │   ├── crypto-posture.js  # Tier 4 crypto posture evaluation, JWT header check, CBOM fragment
 │   │   └── spec-tester.js     # Automated 3-tier specification & tool validation engine
 │   ├── pages/
 │   │   └── privacy.html       # Extension privacy policy page
@@ -109,6 +111,7 @@ mcp-server-inspector-chrome-extension/
 │   ├── session.js             # Shared MCP connection (uses the shared client)
 │   ├── views.js               # Explorer + Workbench navigation tree views
 │   ├── tool-args.js           # Schema -> JSONC argument template, JSONC parsing
+│   ├── tls-probe.js           # TLS handshake probe for the crypto posture audit (node:tls only)
 │   ├── media/                 # host-shim.js (webview <-> host bridge), sidebar.{html,css,js} (Server view), icons
 │   ├── webview/               # Generated: copy of src/workbench + src/lib (git-ignored)
 │   └── dev-server/            # Generated: bundled copy of the mock server for the local dev server (git-ignored)
@@ -116,6 +119,7 @@ mcp-server-inspector-chrome-extension/
 │   ├── test-local-server.js   # Mock MCP server with full SEP support (+ static host for src/)
 │   ├── run-test-suite.js      # Headless automated CLI verification runner
 │   ├── vscode-extension-tests.js # VS Code host, CSP and shim tests
+│   ├── crypto-posture-tests.js   # Crypto posture logic + TLS probe against local TLS servers
 │   └── misc-tests.js          # Protocol edge-case & schema tests
 ├── tools/                     # Build & asset generation scripts
 │   ├── build-dist.js          # Packages src/ into dist/ (zip + unpacked)
@@ -279,7 +283,7 @@ The same workbench runs inside VS Code. The UI code in `src/workbench` and `src/
 
 ```bash
 npm run build:vscode        # stages the shared UI and writes dist/mcp-server-inspector-auditor-<version>.vsix
-code --install-extension dist/mcp-server-inspector-auditor-1.3.1.vsix
+code --install-extension dist/mcp-server-inspector-auditor-1.4.0.vsix
 ```
 
 Then click the **MCP Inspector** icon in the Activity Bar:

@@ -99,6 +99,7 @@ PRE-CONFIGURED PRESETS
 
 • Local Test Server: http://127.0.0.1:3000/mcp
 • Render Cloud Live Demo: https://mcp-ticket-demo.onrender.com/mcp
+• Hosted Reference Server: https://mcp-reference-server-102.vercel.app/mcp
 • Custom Endpoint: Connect to any localhost, intranet, or cloud-hosted MCP endpoint.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
